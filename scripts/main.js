@@ -46,6 +46,13 @@ function addTask(taskText){
   let initButtonContent = document.createTextNode('Reset')
   initButton.appendChild(initButtonContent)
 
+  initButton.addEventListener('click',function(e){
+    e.preventDefault();
+    console.log(taskContent)
+    taskContent.innerHTML=defaultTask
+    recTaskList()
+  })
+
   let deleteButton = document.createElement('a')
   deleteButton.classList.add('tacheSupprimer')
   deleteButton.setAttribute('href','#')
