@@ -6,6 +6,11 @@ const defaultTask = "Tâche"
 //localStorage.setItem("tableau",JSON.stringify(tab))
 
 //console.log(JSON.parse(localStorage.getItem("tableau")))
+//console.log(localStorage.getItem("localTaskList"))
+
+init()
+
+
 
 addTaskButton.addEventListener('click', function(e){
   e.preventDefault()
@@ -29,6 +34,8 @@ function addTask(taskText){
   taskContent.classList.add('tacheContenu')
   taskContent.setAttribute('contenteditable','true')
   taskContent.innerHTML = taskText
+
+  taskContent.addEventListener("blur",function(){recTaskList()})
 
   let initButton = document.createElement('a')
   initButton.classList.add('tacheInit')
@@ -74,4 +81,23 @@ function recTaskList(){
 
   // On enregistre notre tableau en localStorage
   localStorage.setItem('localTaskList', tempTab)
+}
+
+
+function init(){
+  // récupérer la variable localTaskList dans le localsStorage
+  let localTaskList = localStorage.getItem("localTaskList")
+
+  // Si elle n'est pas null
+  if (localTaskList != null) {
+
+    // convertir la variable en un tableau JSON avec JSON.parse
+    localTaskList = JSON.parse(localTaskList)
+
+    // parcourir le tableau et créer une tache pour chacune des entrées avec addTask(taskText)
+    for (let i = 0; i < localTaskList.length; i++) {
+      addTask(localTaskList[i])
+    }
+  }
+
 }
